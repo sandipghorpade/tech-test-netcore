@@ -8,6 +8,7 @@ namespace Todo.Models.TodoItems
         public string Title { get; }
         public UserSummaryViewmodel ResponsibleParty { get; }
         public bool IsDone { get; }
+        public int? Rank { get; set; }
         public Importance Importance { get; }
 
         public TodoItemSummaryViewmodel(int todoItemId, string title, bool isDone, UserSummaryViewmodel responsibleParty, Importance importance)
@@ -17,6 +18,14 @@ namespace Todo.Models.TodoItems
             IsDone = isDone;
             ResponsibleParty = responsibleParty;
             Importance = importance;
+        }
+
+        public TodoItemSummaryViewmodel(int todoItemId, string title,
+                                        bool isDone, int? rank, 
+                                        UserSummaryViewmodel responsibleParty, Importance importance)
+                                        :this(todoItemId, title, isDone, responsibleParty, importance)
+        {
+            Rank = rank;
         }
     }
 }

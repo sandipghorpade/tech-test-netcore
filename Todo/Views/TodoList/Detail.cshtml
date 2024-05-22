@@ -17,12 +17,22 @@
             <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
                 <strong>Add New Item</strong>
             </a>
-
             <span class="mx-2 pipe-separator">|</span>
-
             <a href="#" id="toggleCompletedItems">
                 <strong>Hide Completed Items</strong>
             </a>
+            <span class="mx-2 pipe-separator">|</span>
+            <a href="#" id="orderByRank">
+                <strong>Rank - Low to High</strong>
+            </a>
+        </li>
+
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-4 text-center text-primary">Task</div>
+                <div class="col-md-4 text-center text-primary">Rank</div>
+                <div class="col-md-4 text-center text-primary">Assigned To</div>
+            </div>
 
         </li>
 
@@ -46,7 +56,7 @@
                 
                 <div class="row">
 
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
 
                         @if (item.IsDone)
@@ -61,6 +71,13 @@
                     </a>
                 </div>
 
+                <div class="col-md-4 text-center">
+                        @if (@item.Rank != null)
+                        {
+                            <span>@item.Rank</span>
+                        }
+                </div>
+
                 <div class="col-md-4 text-right">
                     <small>
                         @item.ResponsibleParty.UserName
@@ -69,6 +86,8 @@
 
                     </small>
                 </div>
+
+
                 </div>
 
             </li>
@@ -78,4 +97,4 @@
 
 @section scripts{
     <script src="~/js/todolistdetails.js"></script>
-};
+}

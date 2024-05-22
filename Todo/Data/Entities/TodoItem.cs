@@ -9,7 +9,7 @@ namespace Todo.Data.Entities {
         public IdentityUser ResponsibleParty { get; set; }
         public bool IsDone { get; set; }
         public Importance Importance { get; set; }
-
+        public int? Rank { get; set; }
         public int TodoListId { get; set; }
         public TodoList TodoList { get; set; }
 
@@ -21,6 +21,13 @@ namespace Todo.Data.Entities {
             ResponsiblePartyId = responsiblePartyId;
             Title = title;
             Importance = importance;
+        }
+
+        public TodoItem(int todoListId, string responsiblePartyId,
+                       string title,int? rank, 
+                       Importance importance): this(todoListId, responsiblePartyId, title, importance)
+        {
+            Rank = rank;
         }
     }
 }
