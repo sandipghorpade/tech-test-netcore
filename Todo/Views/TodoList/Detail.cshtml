@@ -17,6 +17,13 @@
             <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
                 <strong>Add New Item</strong>
             </a>
+
+            <span class="mx-2 pipe-separator">|</span>
+
+            <a href="#" id="toggleCompletedItems">
+                <strong>Hide Completed Items</strong>
+            </a>
+
         </li>
 
         @foreach (var item in Model.Items)
@@ -45,6 +52,7 @@
                         @if (item.IsDone)
                         {
                             <s>@item.Title</s>
+                            <input type="hidden" asp-for="@item.IsDone" />
                         }
                         else
                         {
@@ -67,3 +75,7 @@
         }
     </ul>
 </div>
+
+@section scripts{
+    <script src="~/js/todolistdetails.js"></script>
+};
