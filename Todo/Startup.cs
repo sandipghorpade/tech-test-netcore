@@ -8,6 +8,8 @@ using Todo.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Todo.Services;
+using Todo.ServiceContracts;
 
 namespace Todo
 {
@@ -45,6 +47,13 @@ namespace Todo
                     .RequireAuthenticatedUser()
                     .Build();
             });
+
+            services.AddHttpClient("gravatar", httpClient=>
+            {
+                httpClient.BaseAddress = new System.Uri(Configuration["GravatarBaseUrl"]);
+            });
+
+            services.AddSingleton<IGravatarService,GravatarService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +70,7 @@ namespace Todo
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
