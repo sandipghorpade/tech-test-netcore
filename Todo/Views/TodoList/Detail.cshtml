@@ -14,7 +14,7 @@
     <ul class="list-group">
 
         <li class="list-group-item">
-            <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
+            <a href="#" data-toggle="modal" data-target="#createItemModal">
                 <strong>Add New Item</strong>
             </a>
             <span class="mx-2 pipe-separator">|</span>
@@ -53,48 +53,64 @@
             }
 
             <li class="list-group-item @contextualClass">
-                
+
                 <div class="row">
 
-                <div class="col-md-4">
-                    <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
+                    <div class="col-md-4">
+                        <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
 
-                        @if (item.IsDone)
-                        {
-                            <s>@item.Title</s>
-                            <input type="hidden" asp-for="@item.IsDone" />
-                        }
-                        else
-                        {
-                            <text>@item.Title</text>
-                        }
-                    </a>
-                </div>
+                            @if (item.IsDone)
+                            {
+                                <s>@item.Title</s>
+                                <input type="hidden" asp-for="@item.IsDone" />
+                            }
+                            else
+                            {
+                                <text>@item.Title</text>
+                            }
+                        </a>
+                    </div>
 
-                <div class="col-md-4 text-center">
+                    <div class="col-md-4 text-center">
                         @if (@item.Rank != null)
                         {
                             <span>@item.Rank</span>
                         }
+                    </div>
+
+                    <div class="col-md-4 text-right">
+                        <small>
+                            @item.ResponsibleParty.UserName
+
+                            <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30" />
+
+                        </small>
+                    </div>
                 </div>
-
-                <div class="col-md-4 text-right">
-                    <small>
-                        @item.ResponsibleParty.UserName
-
-                        <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
-
-                    </small>
-                </div>
-
-
-                </div>
-
             </li>
         }
     </ul>
+
+
+    <div class="modal fade" id="createItemModal" tabindex="-1" role="dialog" aria-labelledby="createItemModalLabel" aria-hidden="true" data-todo-list-id="@Model.TodoListId">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createItemModalLabel">Add New Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-@section scripts{
+<script>
+    var getTodoItemFormPartialViewUrl = '@Url.Action("GetTodoItemFormPartialView", "TodoItem")';
+</script>
+
+@section scripts {
     <script src="~/js/todolistdetails.js"></script>
 }

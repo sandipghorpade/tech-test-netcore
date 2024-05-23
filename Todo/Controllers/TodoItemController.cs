@@ -22,8 +22,7 @@ namespace Todo.Controllers
         [HttpGet]
         public IActionResult Create(int todoListId)
         {
-            var todoList = dbContext.SingleTodoList(todoListId);
-            var fields = TodoItemCreateFieldsFactory.Create(todoList, User.Id());
+            var fields = GetViewModelForCreate(todoListId);
             return View(fields);
         }
 
@@ -65,9 +64,23 @@ namespace Todo.Controllers
             return RedirectToListDetail(todoItem.TodoListId);
         }
 
+
+        [HttpGet]
+        public IActionResult GetTodoItemFormPartialView(int todoListId)
+        {
+            var fields = GetViewModelForCreate(todoListId);
+            return PartialView("_TodoItemFormPartial", fields);
+        }
+
         private RedirectToActionResult RedirectToListDetail(int fieldsTodoListId)
         {
-            return RedirectToAction("Detail", "TodoList", new {todoListId = fieldsTodoListId});
+            return RedirectToAction("Detail", "TodoList", new { todoListId = fieldsTodoListId });
+        }
+
+        private TodoItemCreateFields GetViewModelForCreate(int todoListId)
+        {
+            var todoList = dbContext.SingleTodoList(todoListId);
+            return TodoItemCreateFieldsFactory.Create(todoList, User.Id());
         }
     }
 }

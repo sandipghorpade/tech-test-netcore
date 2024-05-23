@@ -6,11 +6,21 @@
 
         $(".list-group-item").each(function () {
             var itemTitle = $(this).find('input[name="item.IsDone"]');
-            if (itemTitle.length>0) {
+            if (itemTitle.length > 0) {
                 $(this).toggle(!isHideCompleted);
             }
         });
 
         link.text(isHideCompleted ? "Show Completed Items" : "Hide Completed Items");
     });
+
+    $('#createItemModal').on('shown.bs.modal', function (e) {
+        var todoListId = $(this).data('todo-list-id');
+        var url = getTodoItemFormPartialViewUrl + '?todoListId=' + todoListId;
+
+        $.get(url, function (data) {
+            $('#createItemModal .modal-body').html(data);
+        });
+    });
+
 });

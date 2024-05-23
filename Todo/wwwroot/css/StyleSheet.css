@@ -9,3 +9,23 @@
     width: 30px;
     height: 30px;
 }
+
+.modal-dialog {
+    max-width: 800px;
+    width: 100%;
+    margin: 30px auto;
+}
+
+.modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding: 15px;
+}
+
+    .modal-body .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .modal-body .form-control {
+        max-width: 100%;
+    }
