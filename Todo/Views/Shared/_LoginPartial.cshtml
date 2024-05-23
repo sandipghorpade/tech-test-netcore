@@ -17,20 +17,18 @@
 
                         var iu = await UserManager.GetUserAsync(User);
                         var emailAddress = await UserManager.GetEmailAsync(iu);
-                        var gravatarhash = Gravatar.GetHash(emailAddress);                       
+                        //var gravatarhash = Gravatar.GetHash(emailAddress);                       
                         var profileInfo = await gravatarService.GetProfileInformation(emailAddress);
-                        if (!string.IsNullOrEmpty(profileInfo.Item1) && !string.IsNullOrEmpty(profileInfo.Item2))
-                        {
-                            string thumbnailurl = $"{@profileInfo.Item2}?s=30";
-                            <img src="@thumbnailurl" />
+                        <img id="profileAvatar" class="avatar" src="@profileInfo.Item2" />
+                        if (!string.IsNullOrEmpty(profileInfo.Item1))
+                        {                            
                             <span>@profileInfo.Item1</span>
                             <span>(@UserManager.GetUserName(User))</span>
                         }
                         else
-                        {
-                            <img src="https://www.gravatar.com/avatar/@gravatarhash?s=30" />
+                        {                           
                             @UserManager.GetUserName(User)
-                        }
+                        }                      
                     }                   
                    
                 </a>

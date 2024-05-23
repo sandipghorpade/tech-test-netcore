@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System;
 using Todo.ServiceContracts;
 using System.Linq;
+using Todo.Constants;
 
 namespace Todo.Services
 {
@@ -36,9 +37,9 @@ namespace Todo.Services
                         {
                             var entity = respone["entry"][0] as JObject;
                             return new Tuple<string, string>(Convert.ToString(entity["displayName"]),
-                                                            Convert.ToString(entity["thumbnailUrl"]));
+                                                             Convert.ToString(entity["thumbnailUrl"]));
                         }
-                    }
+                    }                    
                 }
             }
             catch (Exception ex)
@@ -46,7 +47,7 @@ namespace Todo.Services
                 _logger.LogError($"Exception occured while fecthing gravatar profile for user {emailAddress}. Exception is {ex}");
             }
 
-            return new Tuple<string, string>("", "");
+            return new Tuple<string, string>(string.Empty, ApplicationConstants.UnknownUserAvatarPath);
         }
     }
 }
