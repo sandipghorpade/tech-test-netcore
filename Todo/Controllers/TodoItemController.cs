@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Todo.Data;
 using Todo.Data.Entities;
@@ -10,6 +11,7 @@ using Todo.Services;
 namespace Todo.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class TodoItemController : Controller
     {
         private readonly ApplicationDbContext dbContext;
@@ -70,6 +72,32 @@ namespace Todo.Controllers
         {
             var fields = GetViewModelForCreate(todoListId);
             return PartialView("_TodoItemFormPartial", fields);
+        }
+
+        [HttpPatch]
+        [Route("[action]/{todoListId}")]
+        public async Task<IActionResult> Patch([FromRoute] int todoListId,
+                                               [FromBody] JsonPatchDocument<TodoItemPatchFields> patchDocument)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var todoItem = dbContext.SingleTodoItem(todoListId);
+            var patchToDoFields = TodoItemPatchFieldsFactory.Create(todoItem);
+            patchDocument.ApplyTo(patchToDoFields,ModelState);
+
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            TodoItemPatchFieldsFactory.Update(patchToDoFields, todoItem);
+
+            dbContext.Update(todoItem);
+            await dbContext.SaveChangesAsync();
+
+            return NoContent();
         }
 
         private RedirectToActionResult RedirectToListDetail(int fieldsTodoListId)
