@@ -53,7 +53,11 @@ namespace Todo
                 httpClient.BaseAddress = new System.Uri(Configuration["GravatarBaseUrl"]);
             });
 
+            services.AddMemoryCache();
+
             services.AddSingleton<IGravatarService, GravatarService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
