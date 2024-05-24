@@ -29,3 +29,21 @@
     .modal-body .form-control {
         max-width: 100%;
     }
+
+.rank-container {
+    display: inline-flex;
+    align-items: center;
+}
+
+.rank-value {
+    margin-right: 5px;
+}
+
+.rank-input {
+    width: 50px;
+    margin-right: 5px;
+}
+
+.edit-rank {
+    cursor: pointer;
+}
