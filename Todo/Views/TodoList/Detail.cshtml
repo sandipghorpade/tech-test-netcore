@@ -71,13 +71,10 @@
                         </a>
                     </div>
 
-                    <div class="col-md-4 text-center">
-                        @if (@item.Rank != null)
-                        {
-                            <span class="rank-value">@item.Rank</span>
-                            <input type="text" class="form-control rank-input" value="@item.Rank" style="display: none; width: 50px;" data-todo-item-id="@item.TodoItemId">
-                            <i class="bi bi-pencil edit-rank"></i>
-                        }
+                    <div class="col-md-4 text-center">                      
+                        <span class="rank-value">@item.Rank</span>
+                        <input type="text" class="form-control rank-input" value="@item.Rank" style="display: none; width: 50px;" data-todo-item-id="@item.TodoItemId">
+                        <i class="bi bi-pencil edit-rank"></i>
                     </div>
 
                     <div class="col-md-4 text-right">
