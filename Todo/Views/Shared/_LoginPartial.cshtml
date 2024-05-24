@@ -16,10 +16,9 @@
                     @{
 
                         var iu = await UserManager.GetUserAsync(User);
-                        var emailAddress = await UserManager.GetEmailAsync(iu);
-                        //var gravatarhash = Gravatar.GetHash(emailAddress);                       
+                        var emailAddress = await UserManager.GetEmailAsync(iu);                  
                         var profileInfo = await gravatarService.GetProfileInformation(emailAddress);
-                        <img id="profileAvatar" class="avatar" src="@profileInfo.Item2" />
+                        <img id="profileAvatar" class="avatar" src="@Url.Content(@profileInfo.Item2)" />
                         if (!string.IsNullOrEmpty(profileInfo.Item1))
                         {                            
                             <span>@profileInfo.Item1</span>

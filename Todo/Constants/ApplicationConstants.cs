@@ -2,6 +2,6 @@
 {
     public static class ApplicationConstants
     {
-        public const string UnknownUserAvatarPath = @"images/unkownuser.jpg";
+        public const string UnknownUserAvatarPath = @"~/images/unkownuser.jpg";
     }
 }
