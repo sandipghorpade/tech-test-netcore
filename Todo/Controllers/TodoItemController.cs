@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,7 @@ namespace Todo.Controllers
         }
 
         [HttpGet]
+        [Route("[action]")]
         public IActionResult Create(int todoListId)
         {
             var fields = GetViewModelForCreate(todoListId);
@@ -30,6 +32,7 @@ namespace Todo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("[action]")]
         public async Task<IActionResult> Create(TodoItemCreateFields fields)
         {
             if (!ModelState.IsValid) { return View(fields); }
@@ -43,7 +46,8 @@ namespace Todo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int todoItemId)
+        [Route("[action]")]
+        public IActionResult Edit([FromQuery] int todoItemId)
         {
             var todoItem = dbContext.SingleTodoItem(todoItemId);
             var fields = TodoItemEditFieldsFactory.Create(todoItem);
@@ -52,6 +56,7 @@ namespace Todo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("[action]")]
         public async Task<IActionResult> Edit(TodoItemEditFields fields)
         {
             if (!ModelState.IsValid) { return View(fields); }
@@ -68,6 +73,7 @@ namespace Todo.Controllers
 
 
         [HttpGet]
+        [Route("[action]")]
         public IActionResult GetTodoItemFormPartialView(int todoListId)
         {
             var fields = GetViewModelForCreate(todoListId);
@@ -86,9 +92,9 @@ namespace Todo.Controllers
 
             var todoItem = dbContext.SingleTodoItem(todoListId);
             var patchToDoFields = TodoItemPatchFieldsFactory.Create(todoItem);
-            patchDocument.ApplyTo(patchToDoFields,ModelState);
+            patchDocument.ApplyTo(patchToDoFields, ModelState);
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
