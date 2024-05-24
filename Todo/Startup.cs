@@ -54,7 +54,7 @@ namespace Todo
             });
 
             services.AddMemoryCache();
-
+            services.AddSingleton<ICacheService, CachingService>();
             services.AddSingleton<IGravatarService, GravatarService>();
 
 
