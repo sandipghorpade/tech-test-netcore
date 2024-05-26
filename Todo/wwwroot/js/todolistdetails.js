@@ -1,9 +1,9 @@
-﻿$(document).ready(function () {
+﻿document.addEventListener('DOMContentLoaded',function () {
 
     var isAscending = true;
     var $listItems = $(".list-group-item:not(:first):not(:nth-child(2))");
 
-    $("#toggleCompletedItems").click(function () {
+    $("#toggleCompletedItems").on('click', function () {
         var link = $(this).find("strong");
         var isHideCompleted = link.text() === "Hide Completed Items";
 
